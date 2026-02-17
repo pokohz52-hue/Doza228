@@ -71,9 +71,9 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
             # Создаем клавиатуру выбора срока подписки
             vpn_keyboard = [
                 [InlineKeyboardButton('30 дней (170 ₽)', url="http://t.me/send?start=IVEOaNCS5RqC")],
-                [InlineKeyboardButton('2 месяца (340 ₽)', url="http://t.me/send?start=IVEOaNCS5RqC")],
-                [InlineKeyboardButton('3 месяца (500 ₽)', url="http://t.me/send?start=IVEOaNCS5RqC")],
-                [InlineKeyboardButton('12 месяцев (2000 ₽)', url="http://t.me/send?start=IVEOaNCS5RqC")]
+                [InlineKeyboardButton('2 месяца (340 ₽)', url="http://t.me/send?start=IVGH1qsOqA2N")],
+                [InlineKeyboardButton('3 месяца (500 ₽)', url="http://t.me/send?start=IVSKDwbOm98Y")],
+                [InlineKeyboardButton('12 месяцев (2000 ₽)', url="http://t.me/send?start=IVipocGRtZFF")]
             ]
             
             reply_markup = InlineKeyboardMarkup(vpn_keyboard)
