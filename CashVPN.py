@@ -12,7 +12,7 @@ from telegram.ext import (
 # =========================
 # НАСТРОЙКИ
 # =========================
-TOKEN = "PASTE_YOUR_BOT_TOKEN_HERE"
+TOKEN = "8579044660:AAFtSIirUYljRe3ctnU4VQMxivEFK7tgi8U"
 ADMIN_CHAT_ID = "@MrKeinTop"  # можно указать ID или username
 
 # =========================
