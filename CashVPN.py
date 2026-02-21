@@ -8,8 +8,8 @@ from telegram.ext import (
     ContextTypes,
 )
 
-TOKEN = "8579044660:AAFtSIirUYljRe3ctnU4VQMxivEFK7tgi8U"
-ADMIN_CHAT_ID = "@MrFixTop"
+TOKEN = "PASTE_YOUR_BOT_TOKEN_HERE"
+ADMIN_CHAT_ID = "@MrKeinTop"
 
 users_data = {}
 
@@ -131,7 +131,7 @@ def main():
     application.add_handler(CallbackQueryHandler(button))
 
     job_queue = application.job_queue
-     job_queue.run_repeating(send_daily_report, interval=timedelta(days=1), first=10)
+    job_queue.run_repeating(send_daily_report, interval=timedelta(days=1), first=10)
 
     application.run_polling()
 
