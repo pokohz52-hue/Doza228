@@ -9,7 +9,7 @@ from telegram.ext import (
 )
 
 TOKEN = "8579044660:AAFtSIirUYljRe3ctnU4VQMxivEFK7tgi8U"
-ADMIN_CHAT_ID = "@MrKeinTop"
+ADMIN_CHAT_ID = "@MrFixTop"
 
 users_data = {}
 
