@@ -1,5 +1,4 @@
-
-import asyncio
+mport asyncio
 from datetime import timedelta
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import (
@@ -118,8 +117,6 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 "Выберите подходящий тариф VPN:",
                 reply_markup=InlineKeyboardMarkup(vpn_keyboard)
             )
-
-
 
     elif query.data == 'check_payment_buy':
         users_data[user_id]['trial_tag'] = True
