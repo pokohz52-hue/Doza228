@@ -131,7 +131,7 @@ def main():
     application.add_handler(CallbackQueryHandler(button))
 
     job_queue = application.job_queue
-    job_queue.run_repeating(send_daily_report, interval=timedelta(days=1), first=10)
+     job_queue.run_repeating(send_daily_report, interval=timedelta(days=1), first=10)
 
     application.run_polling()
 
