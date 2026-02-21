@@ -117,7 +117,7 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 "Выберите подходящий тариф VPN:",
                 reply_markup=InlineKeyboardMarkup(vpn_keyboard)
             )
-elif query.data == 'check_payment_buy':
+if elif query.data == 'check_payment_buy':
         users_data[user_id]['trial_tag'] = True
         await query.edit_message_text("✅ Теперь вы можете выбрать срок подписки.")
 
