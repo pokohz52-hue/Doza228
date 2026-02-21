@@ -8,20 +8,12 @@ from telegram.ext import (
     ContextTypes,
 )
 
-# =========================
-# НАСТРОЙКИ
-# =========================
 TOKEN = "8579044660:AAFtSIirUYljRe3ctnU4VQMxivEFK7tgi8U"
-ADMIN_CHAT_ID = "@MrKeinTop"  # можно указать ID или username
+ADMIN_CHAT_ID = "@MrKeinTop"
 
-# =========================
-# ХРАНИЛИЩЕ ДАННЫХ
-# =========================
 users_data = {}
 
-# =========================
-# /start
-# =========================
+
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = [
         [
@@ -37,19 +29,15 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         ]
     ]
 
-    reply_markup = InlineKeyboardMarkup(keyboard)
-
     await update.message.reply_text(
         "Привет 👋\n\n"
         "В CashVPN ты можешь приобрести VPN по низким ценам\n"
         "или активировать пробный тариф!\n\n"
         "Выбирай кнопку ниже ⏬",
-        reply_markup=reply_markup
+        reply_markup=InlineKeyboardMarkup(keyboard)
     )
 
-# =========================
-# ОБРАБОТКА КНОПОК
-# =========================
+
 async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     await query.answer()
@@ -58,26 +46,17 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
     users_data.setdefault(user_id, {})
     has_trial_tag = users_data[user_id].get('trial_tag', False)
 
-    # -------------------------
-    # ПРОБНЫЙ ТАРИФ
-    # -------------------------
     if query.data == 'trial':
         if has_trial_tag:
             await query.edit_message_text("❌ Вы уже получали демо подписку.")
         else:
             trial_keyboard = [[
-                InlineKeyboardButton(
-                    'Оплатить 1 руб.',
-                    url="http://t.me/send?start=IVyOwIKIS7Th"
-                ),
-                InlineKeyboardButton(
-                    'Проверить оплату',
-                    callback_data='check_payment'
-                )
+                InlineKeyboardButton('Оплатить 1 руб.', url="http://t.me/send?start=IVyOwIKIS7Th"),
+                InlineKeyboardButton('Проверить оплату', callback_data='check_payment')
             ]]
 
             await query.edit_message_text(
-                "Подтвердите аккаунт платёжом 1 рубль для активации пробного периода VPN.",
+                "Подтвердите аккаунт платёжом 1 рубль.",
                 reply_markup=InlineKeyboardMarkup(trial_keyboard)
             )
 
@@ -85,24 +64,15 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
         users_data[user_id]['trial_tag'] = True
         await query.edit_message_text("✅ Оплата успешно зарегистрирована!")
 
-    # -------------------------
-    # ПОКУПКА VPN
-    # -------------------------
     elif query.data == 'buy':
         if not has_trial_tag:
             buy_keyboard = [[
-                InlineKeyboardButton(
-                    'Оплатить 1 руб.',
-                    url="http://t.me/send?start=IVyOwIKIS7Th"
-                ),
-                InlineKeyboardButton(
-                    'Проверить оплату',
-                    callback_data='check_payment_buy'
-                )
+                InlineKeyboardButton('Оплатить 1 руб.', url="http://t.me/send?start=IVyOwIKIS7Th"),
+                InlineKeyboardButton('Проверить оплату', callback_data='check_payment_buy')
             ]]
 
             await query.edit_message_text(
-                "Оплатите 1 рубль для подтверждения аккаунта и открытия полного доступа.",
+                "Оплатите 1 рубль для подтверждения аккаунта.",
                 reply_markup=InlineKeyboardMarkup(buy_keyboard)
             )
         else:
@@ -114,16 +84,14 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
             ]
 
             await query.edit_message_text(
-                "Выберите подходящий тариф VPN:",
+                "Выберите тариф VPN:",
                 reply_markup=InlineKeyboardMarkup(vpn_keyboard)
             )
-if elif query.data == 'check_payment_buy':
+
+    elif query.data == 'check_payment_buy':
         users_data[user_id]['trial_tag'] = True
         await query.edit_message_text("✅ Теперь вы можете выбрать срок подписки.")
 
-    # -------------------------
-    # ПРОФИЛЬ
-    # -------------------------
     elif query.data == 'profile':
         first_name = query.from_user.first_name or ""
         last_name = query.from_user.last_name or ""
@@ -139,47 +107,31 @@ if elif query.data == 'check_payment_buy':
 
         await query.edit_message_text(profile_info)
 
-    # -------------------------
-    # СКОРО
-    # -------------------------
     elif query.data == 'soon':
         await query.edit_message_text("⏳ Эта функция временно недоступна.")
 
-    # -------------------------
-    # О БОТЕ
-    # -------------------------
     elif query.data == 'about_bot':
-        about_text = (
+        await query.edit_message_text(
             "📜 Правила использования бота:\n\n"
-            "1. За использование VPN в запрещённых целях возможна блокировка аккаунта.\n"
-            "2. VPN предоставляется только на одно устройство.\n"
-            "3. Дополнительные подключения оплачиваются отдельно."
+            "1. Запрещённые цели — блокировка.\n"
+            "2. VPN на одно устройство.\n"
+            "3. Доп. подключения оплачиваются отдельно."
         )
-        await query.edit_message_text(about_text)
 
-# =========================
-# ЕЖЕДНЕВНЫЙ ОТЧЁТ
-# =========================
+
 async def send_daily_report(context: ContextTypes.DEFAULT_TYPE):
-    report = f"📊 Ежедневный отчёт:\n\nВсего пользователей: {len(users_data)}\n\n{users_data}"
+    report = f"📊 Отчёт:\nПользователей: {len(users_data)}"
     await context.bot.send_message(chat_id=ADMIN_CHAT_ID, text=report)
 
-# =========================
-# ЗАПУСК БОТА
-# =========================
+
 def main():
     application = ApplicationBuilder().token(TOKEN).build()
 
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CallbackQueryHandler(button))
 
-    # ежедневная отправка отчёта
     job_queue = application.job_queue
-    job_queue.run_repeating(
-        send_daily_report,
-        interval=timedelta(days=1),
-        first=10
-    )
+    job_queue.run_repeating(send_daily_report, interval=timedelta(days=1), first=10)
 
     application.run_polling()
 
