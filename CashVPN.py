@@ -11,7 +11,7 @@ from telegram.ext import (
 # =========================
 # НАСТРОЙКИ
 # =========================
-TOKEN = "8579044660:AAFtSIirUYljRe3ctnU4VQMxivEFK7tgi8U"
+TOKEN = "PASTE_YOUR_BOT_TOKEN_HERE"
 ADMIN_CHAT_ID = "@MrKeinTop"  # можно указать ID или username
 
 # =========================
@@ -117,8 +117,7 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 "Выберите подходящий тариф VPN:",
                 reply_markup=InlineKeyboardMarkup(vpn_keyboard)
             )
-
-    elif query.data == 'check_payment_buy':
+elif query.data == 'check_payment_buy':
         users_data[user_id]['trial_tag'] = True
         await query.edit_message_text("✅ Теперь вы можете выбрать срок подписки.")
 
